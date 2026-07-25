@@ -225,7 +225,7 @@ resource "aws_iam_role" "test_gpu_ec2_role" {
           Service = "ec2.amazonaws.com"
         }
       }
-    ] 
+    ]
   })
 }
 
@@ -249,13 +249,13 @@ resource "aws_instance" "test_gpu_ec2" {
   subnet_id                   = aws_subnet.main-subnet-public1-eu-central-1a.id
   associate_public_ip_address = true
   key_name                    = "ff-ec2-key"
-  iam_instance_profile = aws_iam_instance_profile.test_gpu_ec2_profile.name
+  iam_instance_profile        = aws_iam_instance_profile.test_gpu_ec2_profile.name
 
   root_block_device {
     volume_size           = 60
     volume_type           = "gp3"
     delete_on_termination = true
-    encrypted              = true
+    encrypted             = true
   }
 
   instance_market_options {
@@ -273,13 +273,13 @@ resource "aws_instance" "test_gpu_ec2" {
     aws_security_group.access_sg.id
   ]
 
-user_data = file("${path.module}/userdata.sh")
+  user_data = file("${path.module}/userdata.sh")
 
 
   tags = {
     "Name"  = "dev-gpu-node"
     "owner" = "TT"
     "env"   = "${local.env_name}"
-    "gpu"  = "yes"
+    "gpu"   = "yes"
   }
 }

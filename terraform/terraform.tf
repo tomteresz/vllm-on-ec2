@@ -15,7 +15,7 @@ terraform {
     path = "mystate/terraform.tfstate"
   }
 
- 
+
   # backend "s3" {
   #   #bucket name - set the permision, versioning and encryption
   #   bucket = "main-vpc-dev-state"

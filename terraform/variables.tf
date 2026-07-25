@@ -34,7 +34,7 @@ variable "vpc_cidr" {
 
 locals {
   env_name = "${var.vpc_name}-${var.env}"
-  
+
   my_ip_cidr = "${chomp(data.http.my_ip.response_body)}/32"
 
 }

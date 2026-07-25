@@ -39,3 +39,7 @@ output "test_gpu_ec2_public_ip" {
 
 }
 
+output "check_cloudwatch_agent" {
+  value       = "Check CloudWatch installation - systemctl status amazon-cloudwatch-agent"
+  description = "Manual verification step for CloudWatch agent"
+}
