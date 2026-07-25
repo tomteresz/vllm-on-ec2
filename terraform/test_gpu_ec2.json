@@ -1,0 +1,305 @@
+{
+    "widgets": [
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(CPUUtilization) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "id": "q1", "period": 300, "region": "eu-central-1" } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "period": 300,
+                "view": "timeSeries",
+                "stacked": false,
+                "title": "EC2 CPU utilization",
+                "region": "eu-central-1",
+                "stat": "Average"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(CPUCreditUsage) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "id": "q1", "period": 300, "region": "eu-central-1" } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "period": 300,
+                "view": "timeSeries",
+                "stacked": false,
+                "title": "EC2 CPU credits usage",
+                "region": "eu-central-1"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 18,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(NetworkIn) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "id": "q1", "period": 300, "region": "eu-central-1" } ]
+                ],
+                "view": "timeSeries",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false,
+                "yAxis": {
+                    "left": {
+                        "min": 0
+                    }
+                },
+                "region": "eu-central-1",
+                "title": "   EC2 Network in"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(NetworkOut) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "id": "q1", "period": 300, "region": "eu-central-1" } ]
+                ],
+                "view": "timeSeries",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false,
+                "yAxis": {
+                    "left": {
+                        "min": 0
+                    }
+                },
+                "region": "eu-central-1",
+                "title": "   EC2 Network out"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 18,
+            "width": 24,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(CPUUtilization) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "id": "q1", "period": 300, "region": "eu-central-1" } ]
+                ],
+                "sparkline": true,
+                "view": "singleValue",
+                "period": 300,
+                "stat": "Average",
+                "width": 1614,
+                "height": 200,
+                "region": "eu-central-1",
+                "title": "   EC2 last 5min avg % CPU utilization"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 24,
+            "width": 24,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(CPUUtilization) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "id": "q1", "period": 900, "region": "eu-central-1" } ]
+                ],
+                "sparkline": true,
+                "view": "singleValue",
+                "period": 900,
+                "stat": "Average",
+                "width": 1614,
+                "height": 200,
+                "region": "eu-central-1",
+                "title": "   EC2 last 15min avg % CPU utilization"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 12,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(CPUCreditBalance) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "id": "q1", "period": 300, "region": "eu-central-1" } ]
+                ],
+                "view": "timeSeries",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false,
+                "yAxis": {
+                    "left": {
+                        "min": 0
+                    }
+                },
+                "region": "eu-central-1",
+                "title": "EC2 CPU credit balance"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 30,
+            "width": 24,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(CPUUtilization) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes'", "id": "e1", "label": "Average % CPU Usage", "period": 900, "region": "eu-central-1" } ]
+                ],
+                "sparkline": true,
+                "view": "singleValue",
+                "period": 900,
+                "stat": "Average",
+                "width": 1614,
+                "height": 200,
+                "region": "eu-central-1",
+                "title": "   EC2 fleet avg % CPU utilization (tag-filtered)"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(StatusCheckFailed_Instance) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "label": "StatusCheckFailed_Instance", "id": "q1" } ]
+                ],
+                "view": "timeSeries",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false,
+                "yAxis": {
+                    "left": {
+                        "min": 0
+                    }
+                },
+                "region": "eu-central-1",
+                "title": "Status check failed for instance - OS problem"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 12,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(StatusCheckFailed_System) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "label": "StatusCheckFailed_System", "id": "q1" } ]
+                ],
+                "view": "timeSeries",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false,
+                "yAxis": {
+                    "left": {
+                        "min": 0
+                    }
+                },
+                "region": "eu-central-1",
+                "title": "StatusCheckFailed_System - Hardware problem"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 18,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(StatusCheckFailed) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "label": "StatusCheckFailed", "id": "q1", "region": "eu-central-1" } ]
+                ],
+                "view": "timeSeries",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false,
+                "yAxis": {
+                    "left": {
+                        "min": 0
+                    }
+                },
+                "region": "eu-central-1",
+                "title": "StatusCheckFailed - ANY (OS/Hardware) problem"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SELECT AVG(StatusCheckFailed_AttachedEBS) FROM SCHEMA(\"AWS/EC2\", InstanceId) WHERE tag.gpu = 'yes' GROUP BY InstanceId", "label": "StatusCheckFailed_AttachedEBS", "id": "q1", "region": "eu-central-1" } ]
+                ],
+                "view": "timeSeries",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false,
+                "yAxis": {
+                    "left": {
+                        "min": 0
+                    }
+                },
+                "region": "eu-central-1",
+                "title": "StatusCheckFailed_AttachedEBS - EBS problem"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 12,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SEARCH('Namespace=\"GPU/vLLM\" MetricName=\"nvidia_smi_memory_total\"', 'Average', 300)", "label": "memory_total", "id": "e2" } ],
+                    [ { "expression": "SEARCH('Namespace=\"GPU/vLLM\" MetricName=\"nvidia_smi_memory_free\"', 'Average', 300)", "label": "memory_free", "id": "e3" } ]
+                ],
+                "sparkline": false,
+                "view": "timeSeries",
+                "title": "GPU - memory utilization",
+                "region": "eu-central-1",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false
+            }
+        },
+        {
+            "type": "metric",
+            "x": 12,
+            "y": 12,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ { "expression": "SEARCH('Namespace=\"GPU/vLLM\" MetricName=\"nvidia_smi_utilization_gpu\"', 'Average', 300)", "label": "utilization_gpu", "id": "e1" } ]
+                ],
+                "sparkline": false,
+                "view": "timeSeries",
+                "title": "GPU - utilization",
+                "region": "eu-central-1",
+                "stat": "Average",
+                "period": 300,
+                "stacked": false
+            }
+        }
+    ]
+}
