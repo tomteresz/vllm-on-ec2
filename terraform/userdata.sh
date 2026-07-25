@@ -57,9 +57,30 @@ EOF
 systemctl enable amazon-cloudwatch-agent
 systemctl restart amazon-cloudwatch-agent
 
-echo "=== user-data finished at $(date -Is) ==="
-
 #sudo cloud-init status --long
 #sudo cat /var/log/cloud-init-output.log
 #sudo cat /var/log/user-data.log
 #sudo journalctl -u cloud-final -b --no-pager
+
+echo "=== vLLM installation ==="
+
+dnf install -y \
+  python3.13 python3.13-pip python3.13-devel \
+  git gcc gcc-c++
+mkdir -p /home/ec2-user/vllm /home/ec2-user/tmp /home/ec2-user/.cache/pip
+chown -R ec2-user:ec2-user /home/ec2-user/vllm /home/ec2-user/tmp /home/ec2-user/.cache
+# Install vLLM as ec2-user (not root)
+sudo -u ec2-user bash -lc '
+  set -euo pipefail
+  cd /home/ec2-user/vllm
+  python3.13 -m venv .venv
+  source .venv/bin/activate
+  python -m pip install --upgrade pip
+  export TMPDIR=/home/ec2-user/tmp
+  export PIP_CACHE_DIR=/home/ec2-user/.cache/pip
+  pip install vllm
+  pip uninstall -y torchcodec || true
+  vllm --help >/dev/null
+  python -c "import torch; print(\"cuda:\", torch.cuda.is_available())"
+  python -c "import vllm; print(\"vllm:\", vllm.__version__)"
+'

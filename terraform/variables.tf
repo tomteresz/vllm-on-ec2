@@ -30,8 +30,6 @@ variable "vpc_cidr" {
   default = "192.168.100.0/24"
 }
 
-
-
 locals {
   env_name = "${var.vpc_name}-${var.env}"
 

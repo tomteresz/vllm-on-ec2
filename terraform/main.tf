@@ -25,7 +25,7 @@ resource "aws_vpc_dhcp_options_association" "myaws-lab-dhcp-dns" {
   dhcp_options_id = aws_vpc_dhcp_options.myaws-lab-dhcp.id
 }
 
-#create-public-subnet
+#create-public-subnet-1a
 resource "aws_subnet" "main-subnet-public1-eu-central-1a" {
   vpc_id     = aws_vpc.main-vpc.id
   cidr_block = "192.168.100.0/27"
@@ -35,7 +35,7 @@ resource "aws_subnet" "main-subnet-public1-eu-central-1a" {
   }
 }
 
-#create-public-subnet
+#create-public-subnet-1b
 resource "aws_subnet" "main-subnet-public2-eu-central-1b" {
   vpc_id     = aws_vpc.main-vpc.id
   cidr_block = "192.168.100.32/27"
@@ -45,7 +45,7 @@ resource "aws_subnet" "main-subnet-public2-eu-central-1b" {
   }
 }
 
-#create-public-subnet
+#create-public-subnet-1c
 resource "aws_subnet" "main-subnet-public3-eu-central-1c" {
   vpc_id     = aws_vpc.main-vpc.id
   cidr_block = "192.168.100.64/27"
@@ -193,7 +193,7 @@ resource "aws_internet_gateway" "main-igw" {
   vpc_id = aws_vpc.main-vpc.id
 
   tags = {
-    Name = "main-igw"
+    Name = "${local.env_name}-main-igw"
   }
 }
 
@@ -245,7 +245,7 @@ resource "aws_iam_instance_profile" "test_gpu_ec2_profile" {
 #ec2
 resource "aws_instance" "test_gpu_ec2" {
   instance_type               = "g4dn.xlarge"
-  ami                         = "ami-066684246476b7b50"
+  ami                         = "ami-01450836fcc589c97"
   subnet_id                   = aws_subnet.main-subnet-public1-eu-central-1a.id
   associate_public_ip_address = true
   key_name                    = "ff-ec2-key"
@@ -264,8 +264,6 @@ resource "aws_instance" "test_gpu_ec2" {
     spot_options {
       instance_interruption_behavior = "terminate"
       spot_instance_type             = "one-time"
-
-
     }
   }
 
@@ -274,7 +272,6 @@ resource "aws_instance" "test_gpu_ec2" {
   ]
 
   user_data = file("${path.module}/userdata.sh")
-
 
   tags = {
     "Name"  = "dev-gpu-node"
