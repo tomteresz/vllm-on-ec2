@@ -42,6 +42,17 @@ sudo tee "$CONFIG_PATH" >/dev/null <<'EOF'
         "metrics_collection_interval": 60
       }
     }
+  },
+    "logs": {
+    "metrics_collected": {
+      "prometheus": {
+        "log_group_name": "/aws/ec2/vllm-metrics",
+        "prometheus_config_path": "/opt/aws/amazon-cloudwatch-agent/etc/prometheus.yaml",
+        "emf_processor": {
+          "metric_namespace": "vLLM/Inference"
+        }
+      }
+    }
   }
 }
 EOF

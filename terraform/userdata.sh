@@ -4,9 +4,11 @@ set -euo pipefail          # removed -x for cleaner logs (optional)
 # Simple, reliable logging that works under cloud-init
 exec >> /var/log/user-data.log 2>&1
 echo "=== user-data started at $(date -Is) ==="
+# cloudwatch log - /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
 
 CONFIG_PATH="/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json"
 AGENT_CTL="/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl"
+PROMETHEUS_CONFIG_PATH="/opt/aws/amazon-cloudwatch-agent/etc/prometheus.yaml"
 
 dnf install -y amazon-cloudwatch-agent
 
@@ -44,9 +46,40 @@ cat > "$CONFIG_PATH" <<'EOF'
         "metrics_collection_interval": 60
       }
     }
+  },
+    "logs": {
+    "metrics_collected": {
+      "prometheus": {
+        "log_group_name": "/aws/ec2/vllm-metrics",
+        "prometheus_config_path": "/opt/aws/amazon-cloudwatch-agent/etc/prometheus.yaml",
+        "emf_processor": {
+          "metric_namespace": "vLLM/Inference"
+        }
+      }
+    }
   }
 }
 EOF
+
+cat > "$PROMETHEUS_CONFIG_PATH" <<'EOF'
+global:
+  scrape_interval: 60s
+  scrape_timeout: 50s
+
+scrape_configs:
+  - job_name: 'vllm'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['127.0.0.1:8000']
+    
+    # Filter metrics after scraping, keeping only specified metrics
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: '^(vllm:num_requests_running|vllm:kv_cache_usage_perc|vllm:prefix_cache_queries|vllm:prefix_cache_hits|vllm:prompt_tokens_total|vllm:generation_tokens_total)$'
+        action: keep
+EOF
+
+
 
 "$AGENT_CTL" \
   -a fetch-config \
